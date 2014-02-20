@@ -43,11 +43,22 @@ class StreamSocketClient
      */
     protected $socket;
 
-    public function __construct($scheme, $host, $port)
+    /**
+     * @var array
+     */
+    protected $context;
+
+    public function __construct($scheme, $host, $port, array $context = [])
     {
+        $scheme = strtolower($scheme);
+        if (!in_array($scheme, stream_get_transports())) {
+            throw new RuntimeException("Unsupported stream-transport $scheme");
+        }
+
         $this->scheme = $scheme;
         $this->host = $host;
         $this->port = $port;
+        $this->context = $context;
     }
 
     /**
@@ -74,18 +85,22 @@ class StreamSocketClient
      *
      * @throws RuntimeException on connection-failure
      */
-    protected static function initSocket($scheme, $host, $port)
+    protected static function initSocket($scheme, $host, $port, array $contextOptions)
     {
         $socketDescriptor = sprintf("%s://%s:%d", $scheme, $host, $port);
-        $socket = stream_socket_client($socketDescriptor, $errNo, $errStr, static::SOCKET_TIMEOUT);
+        $context = stream_context_create($contextOptions);
+
+        $socket = stream_socket_client(
+            $socketDescriptor,
+            $errNo,
+            $errStr,
+            static::SOCKET_TIMEOUT,
+            STREAM_CLIENT_CONNECT,
+            $context
+        );
 
         if ($socket === false) {
             throw new RuntimeException("Failed to create socket-client for $socketDescriptor");
-        }
-
-        // set non-blocking for UDP
-        if (strcasecmp("udp", $scheme) == 0) {
-            stream_set_blocking($socket, 0);
         }
 
         return $socket;
@@ -100,7 +115,7 @@ class StreamSocketClient
     {
         // lazy initializing of socket-descriptor
         if (!$this->socket) {
-            $this->socket = self::initSocket($this->scheme, $this->host, $this->port);
+            $this->socket = self::initSocket($this->scheme, $this->host, $this->port, $this->context);
         }
 
         return $this->socket;
@@ -121,7 +136,7 @@ class StreamSocketClient
         $socket = $this->getSocket();
         $byteCount = fwrite($socket, $buffer);
 
-        if ($byteCount === false) {
+        if ($byteCount === false || $byteCount != strlen($buffer)) {
             throw new RuntimeException("Failed to write to socket");
         }
 

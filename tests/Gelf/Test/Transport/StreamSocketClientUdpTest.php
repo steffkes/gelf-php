@@ -63,13 +63,11 @@ class StreamSocketClientUdpTest extends TestCase
     public function testWrite()
     {
         $testData = "Hello World!";
-        $numBytes = $this->socketClient->write($testData);
 
+        $numBytes = $this->socketClient->write($testData);
         $this->assertEquals(strlen($testData), $numBytes);
 
-        // check that message is sent to server
-        $readData = fread($this->serverSocket, $numBytes);
-
+        $readData = stream_socket_recvfrom($this->serverSocket, strlen($testData),  0, $peer);
         $this->assertEquals($testData, $readData);
     }
 
