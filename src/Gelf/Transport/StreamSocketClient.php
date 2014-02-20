@@ -48,7 +48,7 @@ class StreamSocketClient
      */
     protected $context;
 
-    public function __construct($scheme, $host, $port, array $context = [])
+    public function __construct($scheme, $host, $port, array $context = array())
     {
         $scheme = strtolower($scheme);
         if (!in_array($scheme, stream_get_transports())) {
