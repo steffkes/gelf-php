@@ -86,7 +86,7 @@ class HttpTransport extends AbstractTransport
             "Accept: */*"
         );
 
-        if($messageEncoder instanceof CompressedJsonEncoder) {
+        if ($messageEncoder instanceof CompressedJsonEncoder) {
             $request[] = "Content-Encoding: gzip";
         }
 
@@ -99,7 +99,7 @@ class HttpTransport extends AbstractTransport
         $content = $this->socketClient->read($byteCount);
 
         $expected = "HTTP/1.1 202 Accepted";
-        if(strpos($content, $expected) !== 0) {
+        if (strpos($content, $expected) !== 0) {
             throw new RuntimeException(
                 sprintf(
                     "Graylog-Server didn't answer properly, expected '%s' got '%s'",
