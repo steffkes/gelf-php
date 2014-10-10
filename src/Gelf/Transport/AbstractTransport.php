@@ -8,6 +8,12 @@ use Gelf\PublisherInterface;
 
 abstract class AbstractTransport implements TransportInterface, PublisherInterface
 {
+
+    /**
+     * @var EncoderInterface
+     */
+    protected $messageEncoder;
+    
     /**
      * Sets a message encoder
      *

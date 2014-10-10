@@ -15,7 +15,6 @@ class HttpTransport extends AbstractTransport
     protected $path = "/gelf";
 
     protected $socketClient;
-    protected $messageEncoder;
 
     public function __construct($host = null, $port = null, $path = null)
     {

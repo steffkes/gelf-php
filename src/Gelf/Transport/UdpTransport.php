@@ -44,11 +44,6 @@ class UdpTransport extends AbstractTransport
     protected $chunkSize;
 
     /**
-     * @var EncoderInterface
-     */
-    protected $messageEncoder;
-
-    /**
      * @var StreamSocketClient
      */
     protected $socketClient;
