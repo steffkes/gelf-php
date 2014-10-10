@@ -1,11 +1,26 @@
 <?php
 
+/*
+ * This file is part of the php-gelf package.
+ *
+ * (c) Benjamin Zikarsky <http://benjamin-zikarsky.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Gelf\Transport;
 
 use Gelf\Encoder\EncoderInterface;
 use Gelf\MessageInterface;
 use Gelf\PublisherInterface;
 
+/**
+ * The CompressedJsonEncoder allows the encoding of GELF messages as described 
+ * in http://www.graylog2.org/resources/documentation/sending/gelfhttp
+ *
+ * @author Benjamin Zikarsky <benjamin@zikarsky.de>
+ */
 abstract class AbstractTransport implements TransportInterface, PublisherInterface
 {
 
