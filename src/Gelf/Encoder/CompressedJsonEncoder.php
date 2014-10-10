@@ -15,7 +15,7 @@ use Gelf\MessageInterface;
 
 /**
  * The CompressedJsonEncoder allows the encoding of GELF messages as described 
- * in https://github.com/Graylog2/graylog2-docs/wiki/GELF
+ * in http://www.graylog2.org/resources/documentation/sending/gelfhttp
  *
  * @author Benjamin Zikarsky <benjamin@zikarsky.de>
  */
