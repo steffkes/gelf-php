@@ -142,4 +142,9 @@ class StreamSocketClient
 
         return $byteCount;
     }
+
+    public function read($byteCount)
+    {
+        return fread($this->getSocket(), $byteCount);
+    }
 }

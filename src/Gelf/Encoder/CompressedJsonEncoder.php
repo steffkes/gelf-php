@@ -19,7 +19,7 @@ use Gelf\MessageInterface;
  *
  * @author Benjamin Zikarsky <benjamin@zikarsky.de>
  */
-class CompressedJsonEncoder implements EncoderInterface
+class CompressedJsonEncoder extends JsonEncoder
 {
     const DEFAULT_COMPRESSION_LEVEL = -1;
 
@@ -50,7 +50,7 @@ class CompressedJsonEncoder implements EncoderInterface
      */
     public function encode(MessageInterface $message)
     {
-        $json = json_encode($message->toArray());
+        $json = parent::encode($message);
         return gzcompress($json, $this->compressionLevel);
     }
 }
