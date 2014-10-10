@@ -13,7 +13,7 @@ abstract class AbstractTransport implements TransportInterface, PublisherInterfa
      * @var EncoderInterface
      */
     protected $messageEncoder;
-    
+
     /**
      * Sets a message encoder
      *
@@ -39,7 +39,7 @@ abstract class AbstractTransport implements TransportInterface, PublisherInterfa
      * Sends a Message over this transport
      *
      * @param Message $message
-     * @return int the number of UDP packets sent
+     * @return int the number of bytes sent
      */
     abstract public function send(MessageInterface $message);
 

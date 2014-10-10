@@ -63,6 +63,6 @@ class HttpTransport extends AbstractTransport
             );
         }
 
-        return true;        
+        return $byteCount;        
     }
 }
